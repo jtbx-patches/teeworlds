@@ -307,20 +307,29 @@ void CCharacter::FireWeapon()
 
 		case WEAPON_GUN:
 		{
-			new CProjectile(GameWorld(), WEAPON_GUN,
-				m_pPlayer->GetCID(),
-				ProjStartPos,
-				Direction,
-				(int)(Server()->TickSpeed()*GameServer()->Tuning()->m_GunLifetime),
-				g_pData->m_Weapons.m_Gun.m_pBase->m_Damage, false, 0, -1, WEAPON_GUN);
+            int ShotSpread = 1;
+            float Spreading[] = {-0.05f, 0, 0.05f};
+
+            for(int i = -ShotSpread; i <= ShotSpread; ++i)
+            {
+                float a = angle(Direction);
+                a += Spreading[i+ShotSpread];
+
+                new CProjectile(GameWorld(), WEAPON_GUN,
+                                m_pPlayer->GetCID(),
+                                ProjStartPos,
+                                vec2(cosf(a), sinf(a)),
+                                (int)(Server()->TickSpeed()*GameServer()->Tuning()->m_GunLifetime),
+                                g_pData->m_Weapons.m_Gun.m_pBase->m_Damage, false, 0, -1, WEAPON_GUN);
+            }
 
 			GameServer()->CreateSound(m_Pos, SOUND_GUN_FIRE);
 		} break;
 
 		case WEAPON_SHOTGUN:
 		{
-			int ShotSpread = 3;
-            float Spreading[] = {-0.25, -0.15f, -0.050f, 0, 0.050f, 0.15f, 0.25};
+			int ShotSpread = 4;
+            float Spreading[] = {-0.3, -0.25, -0.15f, -0.050f, 0, 0.050f, 0.15f, 0.25, 0.3};
 
 			for(int i = -ShotSpread; i <= ShotSpread; ++i)
 			{
@@ -354,22 +363,20 @@ void CCharacter::FireWeapon()
 		case WEAPON_LASER:
 		{
             int ShotSpread = 1;
-            float Spreading[] = {-0.15f, 0, 0.15f};
+            float Spreading[] = {-0.05f, 0, 0.05f};
 
             for(int i = -ShotSpread; i <= ShotSpread; ++i)
             {
                 float a = angle(Direction);
                 a += Spreading[i+ShotSpread];
-                float v = 1-(absolute(i)/(float)ShotSpread);
 
                 new CLaser(GameWorld(),
                            m_Pos,
                            vec2(cosf(a), sinf(a)),
-                           GameServer()->Tuning()->m_LaserReach,
+                           650.0f,
                            m_pPlayer->GetCID());
             }
 
-			new CLaser(GameWorld(), m_Pos, Direction, GameServer()->Tuning()->m_LaserReach, m_pPlayer->GetCID());
 			GameServer()->CreateSound(m_Pos, SOUND_LASER_FIRE);
 		} break;
 
