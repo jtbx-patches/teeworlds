@@ -708,6 +708,9 @@ void CGameContext::OnClientEnter(int ClientID)
 		Msg.m_Team = NewClientInfoMsg.m_Team;
 		Server()->SendPackMsg(&Msg, MSGFLAG_NOSEND, -1);
 	}
+
+	// hey chat!
+	SendChat(ClientID, CHAT_ALL, ClientID, "hey chat");
 }
 
 void CGameContext::OnClientConnected(int ClientID, bool Dummy, bool AsSpec)
