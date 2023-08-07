@@ -144,6 +144,8 @@ void CCharacterCore::Tick(bool UseInput)
 				m_HookTick = 0;
 				//m_TriggeredEvents |= COREEVENTFLAG_HOOK_LAUNCH;
 			}
+			// reset double jump counter
+			m_Jumped = 0;
 		}
 		else
 		{
