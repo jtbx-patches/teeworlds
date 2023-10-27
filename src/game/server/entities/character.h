@@ -8,6 +8,8 @@
 #include <game/gamecore.h>
 #include <game/server/entity.h>
 
+#define MAX_HEALTH (50)
+#define MAX_ARMOR (501)
 
 class CCharacter : public CEntity
 {

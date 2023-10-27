@@ -30,7 +30,7 @@ bool CLaser::HitCharacter(vec2 From, vec2 To)
 	m_From = From;
 	m_Pos = At;
 	m_Energy = -1;
-	pHit->TakeDamage(vec2(0.f, 0.f), normalize(To-From), g_pData->m_Weapons.m_aId[WEAPON_LASER].m_Damage, m_Owner, WEAPON_LASER);
+	pHit->TakeDamage(vec2(0.f, 0.f), normalize(To-From), 2, m_Owner, WEAPON_LASER);
 	return true;
 }
 
@@ -64,7 +64,7 @@ void CLaser::DoBounce()
 			m_Energy -= distance(m_From, m_Pos) + GameServer()->Tuning()->m_LaserBounceCost;
 			m_Bounces++;
 
-			if(m_Bounces > GameServer()->Tuning()->m_LaserBounceNum)
+			if(m_Bounces > 5)
 				m_Energy = -1;
 
 			GameServer()->CreateSound(m_Pos, SOUND_LASER_BOUNCE);

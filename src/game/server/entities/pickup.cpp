@@ -50,7 +50,7 @@ void CPickup::Tick()
 		switch (m_Type)
 		{
 			case PICKUP_HEALTH:
-				if(pChr->IncreaseHealth(1))
+				if(pChr->IncreaseHealth(MAX_HEALTH/10))
 				{
 					Picked = true;
 					GameServer()->CreateSound(m_Pos, SOUND_PICKUP_HEALTH);
@@ -58,7 +58,7 @@ void CPickup::Tick()
 				break;
 
 			case PICKUP_ARMOR:
-				if(pChr->IncreaseArmor(1))
+				if(pChr->IncreaseArmor(MAX_ARMOR/10))
 				{
 					Picked = true;
 					GameServer()->CreateSound(m_Pos, SOUND_PICKUP_ARMOR);
