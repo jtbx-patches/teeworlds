@@ -119,18 +119,18 @@ void CCharacterCore::Tick(bool UseInput)
 				{
 					m_TriggeredEvents |= COREEVENTFLAG_GROUND_JUMP;
 					m_Vel.y = -m_pWorld->m_Tuning.m_GroundJumpImpulse;
-					m_Jumped |= 1;
+					//m_Jumped |= 1;
 				}
 				else if(!(m_Jumped&2))
 				{
 					m_TriggeredEvents |= COREEVENTFLAG_AIR_JUMP;
 					m_Vel.y = -m_pWorld->m_Tuning.m_AirJumpImpulse;
-					m_Jumped |= 3;
+					//m_Jumped |= 3;
 				}
 			}
 		}
-		else
-			m_Jumped &= ~1;
+		/*else
+			m_Jumped &= ~1;*/
 
 		// handle hook
 		if(m_Input.m_Hook)
@@ -144,8 +144,6 @@ void CCharacterCore::Tick(bool UseInput)
 				m_HookTick = 0;
 				//m_TriggeredEvents |= COREEVENTFLAG_HOOK_LAUNCH;
 			}
-			// reset double jump counter
-			m_Jumped = 0;
 		}
 		else
 		{
