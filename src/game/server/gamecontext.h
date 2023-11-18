@@ -161,6 +161,7 @@ public:
 
 	//
 	void CheckPureTuning();
+	bool IsInstagib();
 	void SendTuningParams(int ClientID);
 
 	//

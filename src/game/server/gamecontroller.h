@@ -210,6 +210,9 @@ public:
 	bool IsTeamplay() const { return m_GameFlags&GAMEFLAG_TEAMS; }
 	bool IsSurvival() const { return m_GameFlags&GAMEFLAG_SURVIVAL; }
 
+	virtual bool IsInstagib() const { return false; }
+	virtual int InstagibWeapon() const { return WEAPON_GUN; }
+
 	const char *GetGameType() const { return m_pGameType; }
 
 	// map

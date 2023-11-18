@@ -729,38 +729,49 @@ bool CCharacter::TakeDamage(vec2 Force, vec2 Source, int Dmg, int From, int Weap
 			return false;
 	}
 
-	// m_pPlayer only inflicts half damage on self
-	if(From == m_pPlayer->GetCID())
-		Dmg = maximum(1, Dmg/2);
-
-	int OldHealth = m_Health, OldArmor = m_Armor;
-	if(Dmg)
+	if(GameServer()->IsInstagib())
 	{
-		if(m_Armor)
+		// no suicides
+		if(From == m_pPlayer->GetCID())
+			return true;
+
+		Die(From, Weapon);
+	}
+	else
+	{
+		// m_pPlayer only inflicts half damage on self
+		if(From == m_pPlayer->GetCID())
+			Dmg = maximum(1, Dmg/2);
+
+		int OldHealth = m_Health, OldArmor = m_Armor;
+		if(Dmg)
 		{
-			if(Dmg > 1)
+			if(m_Armor)
 			{
-				m_Health--;
-				Dmg--;
+				if(Dmg > 1)
+				{
+					m_Health--;
+					Dmg--;
+				}
+
+				if(Dmg > m_Armor)
+				{
+					Dmg -= m_Armor;
+					m_Armor = 0;
+				}
+				else
+				{
+					m_Armor -= Dmg;
+					Dmg = 0;
+				}
 			}
 
-			if(Dmg > m_Armor)
-			{
-				Dmg -= m_Armor;
-				m_Armor = 0;
-			}
-			else
-			{
-				m_Armor -= Dmg;
-				Dmg = 0;
-			}
+			m_Health -= Dmg;
 		}
 
-		m_Health -= Dmg;
+		// create healthmod indicator
+		GameServer()->CreateDamage(m_Pos, m_pPlayer->GetCID(), Source, OldHealth-m_Health, OldArmor-m_Armor, From == m_pPlayer->GetCID());
 	}
-
-	// create healthmod indicator
-	GameServer()->CreateDamage(m_Pos, m_pPlayer->GetCID(), Source, OldHealth-m_Health, OldArmor-m_Armor, From == m_pPlayer->GetCID());
 
 	// do damage Hit sound
 	if(From >= 0 && From != m_pPlayer->GetCID() && GameServer()->m_apPlayers[From])

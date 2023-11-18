@@ -249,6 +249,13 @@ void IGameController::OnCharacterSpawn(CCharacter *pChr)
 	// default health
 	pChr->IncreaseHealth(10);
 
+	if(IsInstagib())
+	{
+		pChr->GiveWeapon(InstagibWeapon(), -1);
+		pChr->SetWeapon(InstagibWeapon());
+		return;
+	}
+
 	// give default weapons
 	pChr->GiveWeapon(WEAPON_HAMMER, -1);
 	pChr->GiveWeapon(WEAPON_GUN, 10);

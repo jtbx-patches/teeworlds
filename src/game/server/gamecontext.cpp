@@ -474,6 +474,14 @@ void CGameContext::CheckPureTuning()
 	}
 }
 
+bool CGameContext::IsInstagib()
+{
+	if(!m_pController)
+		return false;
+
+	return m_pController->IsInstagib();
+}
+
 void CGameContext::SendTuningParams(int ClientID)
 {
 	CheckPureTuning();
