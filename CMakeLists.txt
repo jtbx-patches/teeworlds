@@ -1623,6 +1623,14 @@ set_src(GAME_SERVER GLOB_RECURSE src/game/server
   gamemodes/mod.h
   gamemodes/tdm.cpp
   gamemodes/tdm.h
+  gamemodes/idm.cpp
+  gamemodes/idm.h
+  gamemodes/gdm.cpp
+  gamemodes/gdm.h
+  gamemodes/ictf.cpp
+  gamemodes/ictf.h
+  gamemodes/gctf.cpp
+  gamemodes/gctf.h
   gameworld.cpp
   gameworld.h
   player.cpp

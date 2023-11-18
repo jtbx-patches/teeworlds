@@ -20,6 +20,10 @@
 #include "gamemodes/lts.h"
 #include "gamemodes/mod.h"
 #include "gamemodes/tdm.h"
+#include "gamemodes/idm.h"
+#include "gamemodes/gdm.h"
+#include "gamemodes/ictf.h"
+#include "gamemodes/gctf.h"
 #include "gamecontext.h"
 #include "player.h"
 
@@ -1625,6 +1629,14 @@ void CGameContext::OnInit()
 		m_pController = new CGameControllerLTS(this);
 	else if(str_comp_nocase(Config()->m_SvGametype, "tdm") == 0)
 		m_pController = new CGameControllerTDM(this);
+	else if(str_comp_nocase(Config()->m_SvGametype, "idm") == 0)
+		m_pController = new CGameControllerIDM(this);
+	else if(str_comp_nocase(Config()->m_SvGametype, "gdm") == 0)
+		m_pController = new CGameControllerGDM(this);
+	else if(str_comp_nocase(Config()->m_SvGametype, "ictf") == 0)
+		m_pController = new CGameControllerICTF(this);
+	else if(str_comp_nocase(Config()->m_SvGametype, "gctf") == 0)
+		m_pController = new CGameControllerGCTF(this);
 	else
 		m_pController = new CGameControllerDM(this);
 
